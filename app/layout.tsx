@@ -57,6 +57,9 @@ export const metadata: Metadata = {
   publisher: site.name,
   formatDetection: { telephone: false, address: false, email: false },
   alternates: { canonical: '/' },
+  verification: {
+    google: 'f5f_YS98mHr8_ANQ_axBCTeVS413x-vAY90yJ9mgxSM',
+  },
   robots: {
     index: true,
     follow: true,
