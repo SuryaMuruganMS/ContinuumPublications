@@ -1,0 +1,14 @@
+// Cloudflare Workers — static assets only. No Worker script runs:
+// `npm run build` writes the whole site to ./out and Cloudflare serves it.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "continuumpublications",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./out",
+    // Unknown paths get out/404.html with a 404 status.
+    "not_found_handling": "404-page",
+    // Matches `trailingSlash: true` in next.config.mjs: /about -> /about/
+    "html_handling": "auto-trailing-slash"
+  }
+}

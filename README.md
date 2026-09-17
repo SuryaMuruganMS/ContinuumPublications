@@ -76,6 +76,18 @@ publish directory and the 404 handling. So:
 4. Add `NEXT_PUBLIC_SITE_URL` under **Site settings → Environment variables**.
 5. Deploy.
 
+### Cloudflare (Workers)
+
+`wrangler.jsonc` serves `out/` as static assets, with `404.html` for unknown
+paths and trailing-slash URLs. In **Workers & Pages → Create → Import a
+repository**:
+
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+- Project name: `continuumpublications` (must match `name` in `wrangler.jsonc`)
+
+Add `NEXT_PUBLIC_SITE_URL` as a **build** variable, then redeploy.
+
 ### Cloudflare Pages
 
 1. Push to GitHub.

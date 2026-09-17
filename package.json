@@ -2,7 +2,7 @@
   "name": "continuum-publications",
   "version": "1.0.0",
   "private": true,
-  "description": "Continuum Publications \u2014 an independent research desk.",
+  "description": "Continuum Publications — an independent research desk.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -24,6 +24,7 @@
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "wrangler": "^4.133.0"
   }
 }
