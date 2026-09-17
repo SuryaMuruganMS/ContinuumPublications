@@ -1,0 +1,112 @@
+{
+  "description": "Secondary (media) sources relied on by published Continuum notes. Maintained by scripts/archive-sources.mjs. Read at build time by content/sources/media.ts; a note citing a record whose status is not VERIFIED will not build.",
+  "checked": "2026-09-16T18:55:51.679Z",
+  "sources": [
+    {
+      "key": "bs-2024-12-30-pti-disallowed",
+      "publication": "Business Standard",
+      "headline": "Health insurers disallowed claims worth Rs 15,100 cr during FY24: Irdai",
+      "published": "2024-12-30",
+      "byline": "Press Trust of India",
+      "sourceType": "PTI",
+      "section": "Industry / News",
+      "url": "https://www.business-standard.com/industry/news/health-insurers-disallowed-claims-worth-rs-15-100-cr-during-fy24-irdai-124123000562_1.html",
+      "usedBy": [
+        {
+          "article": "irdai-health-claims-disallowed-row",
+          "sourceIds": [
+            "S17"
+          ]
+        }
+      ],
+      "claimsUsed": [
+        {
+          "claim": "₹15,100 crore disallowed, described as 12.9 per cent of the total claims filed",
+          "excerpt": "Health insurers disallowed claims worth Rs 15,100 crore or 12.9 per cent of the total claims filed during fiscal 2023-24",
+          "assessment": "ambiguous"
+        },
+        {
+          "claim": "IRDAI's cashless sentence carried as written: 66.16 per cent by number cashless, another 39 per cent reimbursement",
+          "excerpt": "66.16 per cent of total number of claims were settled through cashless mode and another 39 per cent through reimbursement mode",
+          "assessment": "correct"
+        }
+      ],
+      "status": "VERIFIED",
+      "retrieved": "2026-09-17",
+      "snapshot": {
+        "file": "raw/bs-2024-12-30-pti-disallowed.html",
+        "sha256": "269ebd4e183c154e70cd619ce341846c085b5c616dbede89e1235e8b3eb2e243",
+        "bytes": 171617
+      },
+      "wayback": null,
+      "publishedAt": "2024-12-30T16:15:45+05:30"
+    },
+    {
+      "key": "bs-2024-12-27-rejection-up",
+      "publication": "Business Standard",
+      "headline": "Health insurance claims rejection up 19.10% in FY24: Irdai report",
+      "published": "2024-12-27",
+      "byline": "Ayush Mishra",
+      "sourceType": "Staff",
+      "section": "Finance / Personal Finance",
+      "url": "https://www.business-standard.com/finance/personal-finance/health-insurance-claims-rejection-up-19-10-in-fy24-irdai-report-124122700754_1.html",
+      "usedBy": [
+        {
+          "article": "irdai-health-claims-disallowed-row",
+          "sourceIds": [
+            "S18",
+            "S34",
+            "S44",
+            "S45"
+          ]
+        }
+      ],
+      "claimsUsed": [
+        {
+          "claim": "₹26,000 crore disallowed and repudiated, up 19.10 per cent",
+          "excerpt": "Health policy claims worth Rs 26,000 crore were disallowed and \"repudiated\" by insurers in the year ending March 2024, marking a 19.10 per cent increase",
+          "assessment": "misleading"
+        },
+        {
+          "claim": "The 19.10 per cent growth figure",
+          "excerpt": "marking a 19.10 per cent increase",
+          "assessment": "misleading"
+        },
+        {
+          "claim": "Prior-year base of ₹21,861 crore, attributed by the outlet to IRDAI",
+          "excerpt": "The rejection amount was Rs 21,861 crore in the year ending March 2023",
+          "assessment": "ambiguous"
+        },
+        {
+          "claim": "A disallowed claim is one an insurer refuses to process over its validity",
+          "excerpt": "refuses to process it due to specific issues with its validity",
+          "assessment": "misleading"
+        },
+        {
+          "claim": "Insurers rejected 11 per cent of health claims",
+          "excerpt": "rejected 11 per cent of health claims and had 6 per cent pending as of March 2024",
+          "assessment": "correct"
+        },
+        {
+          "claim": "The outlet's definition of a settlement ratio",
+          "excerpt": "claims an insurance company settles within a specific period",
+          "assessment": "incorrect"
+        },
+        {
+          "claim": "Public sector insurers had a settlement ratio of 103.38 per cent, read as paying out more than premiums collected",
+          "excerpt": "Public sector insurers had a settlement ratio of 103.38 per cent in 2023-24, indicating that they paid out more than they collected in premiums",
+          "assessment": "incorrect"
+        }
+      ],
+      "status": "VERIFIED",
+      "retrieved": "2026-09-17",
+      "snapshot": {
+        "file": "raw/bs-2024-12-27-rejection-up.html",
+        "sha256": "e934e8555d49b1124349430e28fe525b9793c30cdac8b51ef3b4357462c4ada4",
+        "bytes": 203364
+      },
+      "wayback": null,
+      "publishedAt": "2024-12-27T16:32:00+05:30"
+    }
+  ]
+}

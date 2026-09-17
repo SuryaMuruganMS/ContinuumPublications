@@ -1,0 +1,29 @@
+{
+  "name": "continuum-publications",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Continuum Publications \u2014 an independent research desk.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx serve out",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "og": "node scripts/generate-og.mjs",
+    "prebuild": "node scripts/audit-sources.mjs && node scripts/generate-og.mjs",
+    "archive:sources": "node scripts/archive-sources.mjs",
+    "postbuild": "node scripts/audit-sources.mjs --built",
+    "audit:sources": "node scripts/audit-sources.mjs"
+  },
+  "dependencies": {
+    "next": "15.5.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.2"
+  }
+}

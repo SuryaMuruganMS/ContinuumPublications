@@ -1,0 +1,213 @@
+.root {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--line);
+  background: var(--ink-1);
+  padding-block: var(--sp-8) var(--sp-6);
+  margin-top: auto;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 2fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+}
+
+.identity {
+  display: grid;
+  gap: 1.1rem;
+  align-content: start;
+}
+
+/* The footer wordmark is the only place the identity is set large. It sits
+   like a stamp at the foot of the document. */
+.wordmark {
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  color: var(--fg);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.wordmarkDot {
+  width: 7px;
+  height: 7px;
+  background: var(--orange);
+  margin-top: 0.55em;
+  flex: none;
+}
+
+.identityLines {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.identityLine {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.identityLine b {
+  color: var(--fg-muted);
+  font-weight: 400;
+}
+
+.positioning {
+  color: var(--fg-muted);
+  font-size: 0.875rem;
+  line-height: 1.65;
+  max-width: 38ch;
+  margin-top: 0.35rem;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.heading {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.list {
+  display: grid;
+  gap: 0.1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.42rem;
+  font-size: 0.875rem;
+  color: var(--fg-muted);
+  transition: color var(--dur-2) var(--ease);
+}
+
+.link::before {
+  content: '';
+  width: 0;
+  height: 1px;
+  background: var(--orange);
+  transition: width var(--dur-2) var(--ease);
+}
+
+.link:hover {
+  color: var(--fg);
+}
+
+.link:hover::before {
+  width: 10px;
+}
+
+.bottom {
+  margin-top: var(--sp-8);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  justify-content: space-between;
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.1rem;
+  align-items: center;
+}
+
+.metaDot {
+  width: 3px;
+  height: 3px;
+  background: var(--fg-faint);
+  flex: none;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  border: 1px solid var(--line-mid);
+  padding: 0.45rem 0.7rem;
+  transition:
+    border-color var(--dur-2) var(--ease),
+    color var(--dur-2) var(--ease);
+}
+
+.toggle:hover {
+  border-color: var(--line-orange);
+  color: var(--fg);
+}
+
+.toggleState {
+  width: 22px;
+  height: 10px;
+  border: 1px solid currentColor;
+  position: relative;
+  flex: none;
+}
+
+.toggleState::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  width: 8px;
+  background: var(--orange);
+  transition: transform var(--dur-2) var(--ease);
+}
+
+.toggle[data-on='false'] .toggleState::after {
+  transform: translateX(10px);
+  background: var(--fg-faint);
+}
+
+@media (max-width: 900px) {
+  .top {
+    grid-template-columns: 1fr;
+    gap: var(--sp-7);
+  }
+}
+
+@media (max-width: 560px) {
+  .columns {
+    grid-template-columns: 1fr;
+    gap: var(--sp-5);
+  }
+
+  .bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

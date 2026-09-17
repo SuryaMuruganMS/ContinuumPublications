@@ -1,0 +1,1316 @@
+/* ---------------------------------------------------------------------
+   Keyframes are declared locally in every module that uses them.
+   CSS Modules scopes @keyframes names, so a module referencing a keyframe
+   defined in a global stylesheet silently animates nothing.
+   --------------------------------------------------------------------- */
+
+@keyframes u-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes u-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes u-pulse-ring {
+  0% {
+    opacity: 0.55;
+    transform: scale(0.9);
+  }
+  70% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.9);
+  }
+}
+
+@keyframes u-trace {
+  from {
+    stroke-dashoffset: var(--trace-length, 400);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* =====================================================================
+   HOMEPAGE
+   A sequence, not a stack of cards. Each section hands the reader to the
+   next one: the desk, the note, the figure, the system, the archive, the
+   method, the contract.
+   ===================================================================== */
+
+/* =====================================================================
+   01 — OPENING FRAME
+   ===================================================================== */
+
+.opening {
+  position: relative;
+  min-height: min(94svh, 900px);
+  padding-top: calc(var(--nav-h) + clamp(2.5rem, 8vh, 6rem));
+  padding-bottom: clamp(2rem, 6vh, 4rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* A cursor-tracked highlight over a coordinate grid. It is the only
+   pointer-reactive surface on the site: the desk, lit where you are looking.
+   Disabled for coarse pointers and under reduced motion. */
+.openingField {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(242, 240, 234, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(242, 240, 234, 0.035) 1px, transparent 1px);
+  background-size: clamp(48px, 7vw, 96px) clamp(48px, 7vw, 96px);
+  mask-image: radial-gradient(
+    360px circle at var(--mx, 50%) var(--my, 40%),
+    #000 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    transparent 78%
+  );
+  -webkit-mask-image: radial-gradient(
+    360px circle at var(--mx, 50%) var(--my, 40%),
+    #000 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    transparent 78%
+  );
+  transition: opacity var(--dur-4) var(--ease);
+}
+
+@media (pointer: coarse) {
+  .openingField {
+    mask-image: radial-gradient(520px circle at 50% 30%, #000 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(520px circle at 50% 30%, #000 0%, transparent 75%);
+  }
+}
+
+.openingShell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.openingRule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  position: relative;
+  z-index: 1;
+}
+
+.openingRuleSignal {
+  color: var(--orange);
+}
+
+.openingMain {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: center;
+  padding-block: clamp(2rem, 7vh, 5rem);
+  position: relative;
+  z-index: 1;
+}
+
+.wordmark {
+  /* Sized to fit the left column of .openingMain at every width, not the
+     viewport — the masked reveal clips anything that overflows. */
+  font-size: clamp(2.6rem, 7.5vw, 7rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.84;
+  color: var(--fg);
+  display: grid;
+}
+
+.wordmarkLine {
+  display: block;
+  overflow: hidden;
+}
+
+.wordmarkLine span {
+  display: block;
+  transform: translateY(105%);
+  animation: word-in 1s var(--ease) forwards;
+  animation-delay: calc(var(--i, 0) * 110ms + 120ms);
+}
+
+@keyframes word-in {
+  to {
+    transform: none;
+  }
+}
+
+.wordmarkSecond {
+  color: var(--fg-dim);
+  letter-spacing: -0.04em;
+  font-size: 0.52em;
+  font-weight: 600;
+  padding-top: 0.28em;
+}
+
+.statements {
+  display: grid;
+  gap: 0;
+  align-content: center;
+  border-left: 1px solid var(--line);
+  padding-left: clamp(1.1rem, 3vw, 2.25rem);
+}
+
+.statement {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+  gap: 0.85rem;
+  padding-block: clamp(0.55rem, 1.4vw, 0.9rem);
+  font-size: clamp(1.05rem, 0.85rem + 1.1vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--fg-muted);
+  opacity: 0;
+  animation: u-fade-up var(--dur-4) var(--ease) forwards;
+  animation-delay: calc(var(--i, 0) * 130ms + 560ms);
+}
+
+.statementMark {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--fg-faint);
+  flex: none;
+  transform: translateY(-0.2em);
+}
+
+.statement[data-signal='true'] {
+  color: var(--fg);
+}
+
+.statement[data-signal='true'] .statementMark {
+  background: var(--orange);
+  border-color: var(--orange);
+  box-shadow: 0 0 18px var(--orange-glow);
+}
+
+.openingFoot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: u-fade var(--dur-4) var(--ease) forwards;
+  animation-delay: 1.15s;
+}
+
+.stats {
+  display: flex;
+  gap: clamp(1.25rem, 4vw, 3rem);
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  font-weight: 500;
+  color: var(--fg);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.statValue[data-signal='true'] {
+  color: var(--orange-bright);
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.scrollCue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  transition: color var(--dur-2) var(--ease);
+}
+
+.scrollCue:hover {
+  color: var(--orange-bright);
+}
+
+.scrollCueLine {
+  width: 1px;
+  height: 26px;
+  background: linear-gradient(180deg, var(--orange), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollCueLine::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 8px;
+  background: var(--orange);
+  animation: cue 2.1s var(--ease-in-out) infinite;
+}
+
+@keyframes cue {
+  0% {
+    top: -8px;
+  }
+  70%,
+  100% {
+    top: 26px;
+  }
+}
+
+@media (max-width: 880px) {
+  .openingMain {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-content: center;
+  }
+
+  .statements {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding-left: 0;
+    padding-top: 1.25rem;
+  }
+
+  .openingFoot {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+}
+
+/* =====================================================================
+   02 — CURRENT INVESTIGATION
+   ===================================================================== */
+
+.feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  gap: clamp(1.75rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.featureMain {
+  display: grid;
+  gap: clamp(1rem, 2.5vw, 1.5rem);
+  min-width: 0;
+}
+
+.featureIndex {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.featureIndexNumber {
+  color: var(--orange);
+}
+
+.featureTitle {
+  font-size: var(--step-4);
+  font-weight: 600;
+  letter-spacing: -0.038em;
+  line-height: 1.02;
+  max-width: 18ch;
+}
+
+.featureTitle a {
+  background-image: linear-gradient(var(--orange), var(--orange));
+  background-size: 0 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--dur-4) var(--ease);
+  padding-bottom: 0.06em;
+}
+
+.featureTitle a:hover {
+  background-size: 100% 1px;
+}
+
+.featureDeck {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 0.93rem + 0.4vw, 1.1875rem);
+  line-height: 1.62;
+  color: var(--fg-muted);
+  max-width: 56ch;
+}
+
+.featureMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  height: 50px;
+  padding-inline: 1.3rem;
+  border: 1px solid var(--orange);
+  color: var(--orange-bright);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  justify-self: start;
+  position: relative;
+  overflow: hidden;
+  transition: color var(--dur-3) var(--ease);
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-3) var(--ease);
+  z-index: 0;
+}
+
+.cta:hover {
+  color: var(--fg-on-orange);
+}
+
+.cta:hover::before {
+  transform: scaleX(1);
+}
+
+.cta > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* The evidence signal beside the feature: a compact readout of the note's
+   own evidence composition, derived from its sources. */
+.signal {
+  border: 1px solid var(--line-mid);
+  background: var(--ink-1);
+  position: relative;
+}
+
+.signalHead {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.signalPulse {
+  width: 7px;
+  height: 7px;
+  background: var(--orange);
+  flex: none;
+  position: relative;
+}
+
+.signalPulse::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--orange);
+  animation: u-pulse-ring 2.4s var(--ease) infinite;
+}
+
+.signalRows {
+  display: grid;
+}
+
+.signalRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.signalRow:last-child {
+  border-bottom: 0;
+}
+
+.signalBar {
+  height: 3px;
+  background: var(--ink-4);
+  position: relative;
+  overflow: hidden;
+}
+
+.signalBarFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--w, 0%);
+  background: var(--ev, var(--orange));
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform var(--dur-5) var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.signalRow[data-in='true'] .signalBarFill {
+  transform: scaleX(1);
+}
+
+.signalCount {
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+}
+
+.signalFoot {
+  padding: 0.7rem 0.85rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.7;
+  color: var(--fg-faint);
+}
+
+@media (max-width: 900px) {
+  .feature {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================================
+   03 — THE FINDING
+   ===================================================================== */
+
+.finding {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+}
+
+.findingStage {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) auto minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(1rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 5vw, 3.5rem) clamp(1rem, 4vw, 3rem);
+  border: 1px solid var(--line-mid);
+  background:
+    radial-gradient(80% 120% at 78% 50%, rgba(255, 90, 0, 0.07), transparent 62%),
+    var(--ink-1);
+  position: relative;
+  overflow: hidden;
+}
+
+.findingSide {
+  display: grid;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.findingSide[data-align='end'] {
+  text-align: right;
+  justify-items: end;
+}
+
+.findingLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.findingValue {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-dim);
+  /* Sized so the longest figure never wraps inside its column. A figure that
+     breaks across two lines stops reading as a single quantity. */
+  font-size: clamp(1.6rem, 4.2vw, 3.25rem);
+  white-space: nowrap;
+}
+
+.findingValue[data-signal='true'] {
+  color: var(--orange-bright);
+  font-size: clamp(1.7rem, 5.2vw, 4.25rem);
+  text-shadow: 0 0 70px rgba(255, 90, 0, 0.35);
+}
+
+.findingUnit {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* The relationship between the two figures, drawn rather than asserted. */
+.findingLink {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  align-self: center;
+}
+
+.findingLinkSvg {
+  width: clamp(40px, 8vw, 84px);
+  height: 96px;
+  overflow: visible;
+}
+
+.findingLinkPath {
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 1;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+
+.findingLinkPath[data-in='true'] {
+  animation: u-trace 1.5s var(--ease) 0.25s forwards;
+  --trace-length: 200;
+}
+
+.findingLinkWord {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  white-space: nowrap;
+}
+
+.findingReadout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.findingReadoutCell {
+  background: var(--ink-1);
+  padding: clamp(1rem, 2.5vw, 1.4rem);
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.findingReadoutValue {
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 500;
+  color: var(--orange-bright);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.findingReadoutLabel {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.findingReadoutBody {
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--fg-muted);
+}
+
+@media (max-width: 720px) {
+  .findingStage {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .findingValue,
+  .findingValue[data-signal='true'] {
+    font-size: clamp(1.6rem, 9vw, 2.75rem);
+  }
+
+  .findingSide[data-align='end'] {
+    text-align: left;
+    justify-items: start;
+  }
+
+  .findingLink {
+    grid-auto-flow: column;
+    justify-items: start;
+    justify-content: start;
+    gap: 0.75rem;
+  }
+
+  .findingLinkSvg {
+    width: 90px;
+    height: 28px;
+  }
+}
+
+/* =====================================================================
+   04 — WHY IT MATTERS
+   ===================================================================== */
+
+.matters {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.mattersList {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.mattersItem {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1rem;
+  padding-block: clamp(1rem, 2.5vw, 1.4rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.mattersNumber {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--orange);
+  padding-top: 0.35em;
+}
+
+.mattersText {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+  line-height: 1.62;
+  color: var(--fg);
+}
+
+@media (max-width: 880px) {
+  .matters {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================================
+   05 — THE EVIDENCE SYSTEM
+   ===================================================================== */
+
+.system {
+  display: grid;
+  /* Three across, so the five states plus the closing note fill two complete
+     rows. Five equal columns leaves a hole and makes every card too narrow
+     for the standard text inside it. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.systemCard {
+  --ev: var(--fg-muted);
+  --ev-bg: rgba(242, 240, 234, 0.05);
+  background: var(--ink-1);
+  padding: clamp(1.1rem, 2.5vw, 1.65rem);
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  text-align: left;
+  min-height: 260px;
+  position: relative;
+  transition: background var(--dur-3) var(--ease);
+  overflow: hidden;
+}
+
+.systemCard[data-kind='documented'] {
+  --ev: var(--ev-documented);
+  --ev-bg: var(--ev-documented-bg);
+}
+
+.systemCard[data-kind='calculated'] {
+  --ev: var(--ev-calculated);
+  --ev-bg: var(--ev-calculated-bg);
+}
+
+.systemCard[data-kind='analysis'] {
+  --ev: var(--ev-analysis);
+  --ev-bg: var(--ev-analysis-bg);
+}
+
+.systemCard[data-kind='reported'] {
+  --ev: var(--ev-reported);
+  --ev-bg: var(--ev-reported-bg);
+}
+
+.systemCard[data-kind='unresolved'] {
+  --ev: var(--ev-unresolved);
+  --ev-bg: var(--ev-unresolved-bg);
+}
+
+.systemCard::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--ev);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-4) var(--ease);
+}
+
+.systemCard:hover,
+.systemCard[data-open='true'] {
+  background: var(--ev-bg);
+}
+
+.systemCard:hover::before,
+.systemCard[data-open='true']::before {
+  transform: scaleX(1);
+}
+
+.systemGlyph {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--ev);
+  position: relative;
+}
+
+.systemCard[data-kind='documented'] .systemGlyph {
+  background: var(--ev);
+}
+
+.systemCard[data-kind='calculated'] .systemGlyph {
+  background: linear-gradient(135deg, var(--ev) 0 50%, transparent 50% 100%);
+}
+
+.systemCard[data-kind='analysis'] .systemGlyph {
+  background: linear-gradient(90deg, var(--ev) 0 50%, transparent 50% 100%);
+}
+
+.systemCard[data-kind='reported'] .systemGlyph {
+  background: repeating-linear-gradient(45deg, var(--ev) 0 2px, transparent 2px 5px);
+}
+
+.systemCard[data-kind='unresolved'] .systemGlyph {
+  border-style: dashed;
+}
+
+.systemName {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ev);
+}
+
+.systemCount {
+  font-family: var(--font-mono);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.systemDefinition {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--fg-muted);
+}
+
+.systemStandard {
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--fg-dim);
+  border-top: 1px solid var(--line);
+  padding-top: 0.8rem;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--dur-4) var(--ease);
+}
+
+.systemStandardInner {
+  overflow: hidden;
+}
+
+.systemCard[data-open='true'] .systemStandard {
+  grid-template-rows: 1fr;
+}
+
+.systemToggle {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ev);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: auto;
+  align-self: end;
+  justify-self: start;
+}
+
+@media (max-width: 860px) {
+  .system {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .system {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .systemCard {
+    min-height: 0;
+  }
+}
+
+/* =====================================================================
+   06 — ARCHIVE PREVIEW
+   ===================================================================== */
+
+.archive {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line-mid);
+}
+
+.archiveRow {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 14rem) 7rem;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  align-items: baseline;
+  padding-block: clamp(1.1rem, 2.5vw, 1.6rem);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  transition: background var(--dur-2) var(--ease);
+}
+
+.archiveRow::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1px;
+  width: 0;
+  background: var(--orange);
+  transition: width var(--dur-4) var(--ease);
+}
+
+.archiveRow:hover {
+  background: rgba(242, 240, 234, 0.02);
+}
+
+.archiveRow:hover::before {
+  width: 100%;
+}
+
+.archiveIndex {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-faint);
+}
+
+.archiveRow:hover .archiveIndex {
+  color: var(--orange);
+}
+
+.archiveTitle {
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.375rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: var(--fg);
+}
+
+.archiveTopics {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  line-height: 1.7;
+}
+
+.archiveDate {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--fg-dim);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The empty slots. The archive is built for hundreds and currently holds
+   one; saying so plainly is better than padding it out. */
+.archiveEmpty {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  align-items: center;
+  padding-block: 1.35rem;
+  border-bottom: 1px dashed var(--line);
+  opacity: 0.45;
+}
+
+.archiveEmptyIndex {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-faint);
+}
+
+.archiveEmptyRule {
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--line-mid) 0 4px,
+    transparent 4px 10px
+  );
+}
+
+.archiveFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+}
+
+.archiveNote {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  max-width: 44ch;
+  line-height: 1.8;
+}
+
+@media (max-width: 860px) {
+  .archiveRow {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    row-gap: 0.5rem;
+  }
+
+  .archiveTopics,
+  .archiveDate {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+/* =====================================================================
+   07 — HOW WE WORK
+   ===================================================================== */
+
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  counter-reset: stage;
+}
+
+.stage {
+  background: var(--ink-1);
+  padding: clamp(1rem, 2.2vw, 1.5rem);
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+  counter-increment: stage;
+  position: relative;
+  min-height: 190px;
+  transition: background var(--dur-3) var(--ease);
+}
+
+.stage:hover {
+  background: var(--ink-2);
+}
+
+.stageIndex {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  color: var(--fg-faint);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stageIndex::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.stage:hover .stageIndex {
+  color: var(--orange);
+}
+
+.stageName {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+  line-height: 1.25;
+}
+
+.stageBody {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+/* The trace that runs through every stage. */
+.stage::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-4) var(--ease);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.pipeline[data-in='true'] .stage::after {
+  transform: scaleX(1);
+}
+
+@media (max-width: 1080px) {
+  .pipeline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .pipeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stage {
+    min-height: 0;
+  }
+}
+
+/* =====================================================================
+   08 — TRANSPARENCY
+   ===================================================================== */
+
+.transparency {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.transparencyCard {
+  background: var(--ink-1);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  min-height: 210px;
+  position: relative;
+  transition: background var(--dur-3) var(--ease);
+}
+
+.transparencyCard:hover {
+  background: var(--ink-2);
+}
+
+.transparencyLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+}
+
+.transparencyTitle {
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.transparencyBody {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--fg-muted);
+}
+
+.transparencyGo {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin-top: auto;
+  align-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap var(--dur-2) var(--ease);
+}
+
+.transparencyCard:hover .transparencyGo {
+  color: var(--orange-bright);
+  gap: 0.85rem;
+}
+
+/* =====================================================================
+   09 — EMAIL
+   ===================================================================== */
+
+.email {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .email {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The closing cell of the evidence grid. Not a state — the contract the
+   states are under. */
+.systemNote {
+  background: var(--ink-1);
+  padding: clamp(1.1rem, 2.5vw, 1.65rem);
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+  min-height: 260px;
+  border-top: 2px solid var(--line-mid);
+}
+
+.systemNoteLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.systemNoteBody {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--fg-muted);
+}
+
+.systemNoteLink {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+  margin-top: auto;
+  align-self: end;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap var(--dur-2) var(--ease);
+}
+
+.systemNoteLink:hover {
+  gap: 0.85rem;
+}
+
+@media (max-width: 560px) {
+  .systemNote {
+    min-height: 0;
+  }
+}

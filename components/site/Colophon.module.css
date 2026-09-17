@@ -1,0 +1,203 @@
+/* =====================================================================
+   COLOPHON
+   ===================================================================== */
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 1.25rem;
+}
+
+.swatch {
+  background: var(--ink-1);
+  padding: 1rem;
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+  min-height: 190px;
+}
+
+.swatchChip {
+  height: 46px;
+  border: 1px solid var(--line-mid);
+  margin-bottom: 0.35rem;
+}
+
+.swatchName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.swatchValue {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--orange-bright);
+  letter-spacing: 0.04em;
+}
+
+.swatchToken {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  color: var(--fg-faint);
+  letter-spacing: 0.02em;
+}
+
+.swatchRole {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+  margin-top: 0.15rem;
+}
+
+.note {
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.85;
+  color: var(--fg-dim);
+  max-width: 66ch;
+}
+
+.note a {
+  color: var(--orange-bright);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------------- Type specimens ---------------- */
+
+.typeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 1.25rem;
+}
+
+.typeCell {
+  background: var(--ink-1);
+  padding: clamp(1.1rem, 3vw, 1.6rem);
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+  min-height: 200px;
+}
+
+.typeLabel {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+}
+
+.typeSpecimen {
+  font-size: clamp(1.5rem, 3.5vw, 2.125rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.typeSpecimen[data-face='sans'] {
+  font-family: var(--font-sans);
+  font-weight: 700;
+}
+
+.typeSpecimen[data-face='serif'] {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.typeSpecimen[data-face='mono'] {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  letter-spacing: -0.02em;
+}
+
+.typeBody {
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--fg-dim);
+}
+
+/* ---------------- Evidence markers ---------------- */
+
+.markers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: 1.25rem;
+}
+
+.marker {
+  --ev: var(--fg-muted);
+  background: var(--ink-1);
+  padding: 1rem;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+  min-height: 150px;
+}
+
+.marker[data-kind='documented'] {
+  --ev: var(--ev-documented);
+}
+.marker[data-kind='calculated'] {
+  --ev: var(--ev-calculated);
+}
+.marker[data-kind='analysis'] {
+  --ev: var(--ev-analysis);
+}
+.marker[data-kind='reported'] {
+  --ev: var(--ev-reported);
+}
+.marker[data-kind='unresolved'] {
+  --ev: var(--ev-unresolved);
+}
+
+.markerGlyph {
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--ev);
+  background: var(--ev);
+}
+
+.marker[data-kind='calculated'] .markerGlyph {
+  background: linear-gradient(135deg, var(--ev) 0 50%, transparent 50% 100%);
+}
+
+.marker[data-kind='analysis'] .markerGlyph {
+  background: linear-gradient(90deg, var(--ev) 0 50%, transparent 50% 100%);
+}
+
+.marker[data-kind='reported'] .markerGlyph {
+  background: repeating-linear-gradient(45deg, var(--ev) 0 2px, transparent 2px 5px);
+}
+
+.marker[data-kind='unresolved'] .markerGlyph {
+  background: none;
+  border-style: dashed;
+}
+
+.markerName {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ev);
+}
+
+.markerDefinition {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}

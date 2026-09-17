@@ -1,0 +1,21 @@
+{
+  "description": "Retired sources. Kept for provenance: a source that was once relied on and later replaced is recorded here with what replaced it and why, rather than deleted. This file is read only by scripts/audit-sources.mjs. Application code must never import it, and the build fails if any retired publication name appears in the exported site.",
+  "retired": [
+    {
+      "key": "bimabazaar-2024-12-24",
+      "publication": "Bimabazaar",
+      "description": "Trade aggregator, c. 24 December 2024. Tier 4/5, discovery only. Recorded as source block S6 in the Article #1 evidence matrix.",
+      "formerlyUsedFor": [
+        "Matrix C45 — the 103.38 per cent settlement-ratio claim",
+        "Matrix C46 — the 66.16 / 39 per cent cashless sentence"
+      ],
+      "status": "RETIRED",
+      "retiredOn": "2026-09-17",
+      "replacedBy": {
+        "C45": "bs-2024-12-27-rejection-up",
+        "C46": "bs-2024-12-30-pti-disallowed"
+      },
+      "reason": "The approved final draft attributes both claims to Business Standard. Retrieval of the two Business Standard articles on 2026-09-17 confirmed that the 27 December 2024 article contains the 103.38 per cent settlement-ratio sentence and its definition, and that the 30 December 2024 PTI article carries the cashless sentence. The matrix attribution to Bimabazaar was stale. Bimabazaar is not cited anywhere on the published site and must not be used as a replacement source."
+    }
+  ]
+}

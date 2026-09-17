@@ -1,0 +1,1272 @@
+/* =====================================================================
+   ARTICLE VISUALS — shared shell
+   Every visual is a document object: bordered, labelled, numbered, with
+   its source printed at the foot. None of them is a dashboard widget.
+   ===================================================================== */
+
+.figure {
+  margin: 0;
+  border: 1px solid var(--line-mid);
+  background: var(--ink-1);
+  position: relative;
+}
+
+/* Corner brackets, the recurring evidence motif. */
+.figure::before,
+.figure::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--orange);
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+.figure::before {
+  top: -1px;
+  left: -1px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.figure::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.headLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+}
+
+.headTitle {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--fg-muted);
+}
+
+.headActions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+@media (max-width: 620px) {
+  .headActions {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .segmented {
+    flex: 1;
+  }
+
+  .segment {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.body {
+  padding: clamp(1rem, 3vw, 1.75rem) clamp(1rem, 3vw, 1.65rem);
+}
+
+.caption {
+  padding: 0.8rem 1.1rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+  color: var(--fg-dim);
+}
+
+.captionSource {
+  color: var(--fg-faint);
+  display: block;
+  margin-top: 0.3rem;
+}
+
+/* ---------------- Segmented control ---------------- */
+
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--line-mid);
+  position: relative;
+  background: var(--ink-0);
+}
+
+.segment {
+  padding: 0.42rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-dim);
+  position: relative;
+  z-index: 1;
+  transition: color var(--dur-2) var(--ease);
+  white-space: nowrap;
+  min-height: 34px;
+}
+
+.segment[data-on='true'] {
+  color: var(--fg-on-orange);
+}
+
+.segment:hover:not([data-on='true']) {
+  color: var(--fg);
+}
+
+.segmentThumb {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--orange);
+  transition: transform var(--dur-3) var(--ease), width var(--dur-3) var(--ease);
+  z-index: 0;
+}
+
+/* =====================================================================
+   VISUAL 1 — TABLE I.29
+   ===================================================================== */
+
+/* The hero pair. This is the whole note in two numbers. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) auto minmax(0, 1.25fr);
+  align-items: center;
+  gap: clamp(0.75rem, 3vw, 2rem);
+  padding-bottom: clamp(1.25rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+}
+
+.heroCell {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.heroLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.heroValue {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg);
+  /* Sized so the longest figure stays on one line inside the reading column.
+     A figure broken across two lines stops reading as a single quantity. */
+  font-size: clamp(1.1rem, 2.6vw, 2rem);
+  white-space: nowrap;
+}
+
+.heroValue--signal {
+  color: var(--orange-bright);
+  font-size: clamp(1.25rem, 3.4vw, 2.75rem);
+  text-shadow: 0 0 42px var(--orange-glow);
+}
+
+.heroUnit {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* The "against" connector — the evidence signal between the two figures. */
+.connector {
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+  align-self: center;
+}
+
+.connectorLine {
+  width: 1px;
+  height: clamp(28px, 6vw, 54px);
+  background: linear-gradient(180deg, transparent, var(--orange), transparent);
+  position: relative;
+}
+
+.connectorLine::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border: 1px solid var(--orange);
+  background: var(--ink-1);
+  transform: rotate(45deg);
+}
+
+.connectorWord {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+/* ---------------- The table itself ---------------- */
+
+.tableWrap {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  margin-inline: calc(clamp(1rem, 3vw, 1.65rem) * -1);
+  padding-inline: clamp(1rem, 3vw, 1.65rem);
+}
+
+.table {
+  width: 100%;
+  min-width: 560px;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.table caption {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  padding-bottom: 0.75rem;
+}
+
+.table th,
+.table td {
+  text-align: right;
+  padding: 0.7rem 0.6rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.875rem;
+}
+
+.table th[scope='row'] {
+  text-align: left;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--fg-muted);
+  white-space: nowrap;
+}
+
+.table thead th {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  border-bottom-color: var(--line-mid);
+  padding-bottom: 0.55rem;
+  vertical-align: bottom;
+}
+
+.table thead th span {
+  display: block;
+  font-size: 0.5625rem;
+  letter-spacing: 0.12em;
+  color: var(--fg-faint);
+  opacity: 0.7;
+  margin-top: 0.2rem;
+}
+
+.cellValue {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--fg);
+  letter-spacing: -0.01em;
+}
+
+/* A cell we have not extracted. Dimmed, inert, and explained in the legend. */
+.cellEmpty {
+  font-family: var(--font-mono);
+  color: var(--fg-faint);
+  opacity: 0.55;
+}
+
+.rowFocus th[scope='row'] {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.rowFocus td {
+  background: var(--orange-a08);
+}
+
+.rowFocus .cellValue {
+  color: var(--orange-bright);
+  font-size: 1rem;
+}
+
+.cellPercent {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--fg-dim);
+}
+
+.rowFocus .cellPercent {
+  color: var(--orange-tint);
+}
+
+/* Flow-statement roles get quiet structural cues, so the table reads as the
+   reconciliation it is rather than as seven equal rows. */
+.table tr[data-role='total'] th[scope='row'],
+.table tr[data-role='total'] td {
+  border-bottom-color: var(--line-mid);
+  background: rgba(242, 240, 234, 0.025);
+}
+
+.table tr[data-role='total'] th[scope='row'] {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+.table tr[data-role='disposal'] th[scope='row'] {
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.table tr[data-role='disposal'] th[scope='row']::after {
+  content: '';
+  position: absolute;
+  left: 0.2rem;
+  top: 50%;
+  width: 5px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.rowFocus th[scope='row']::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--orange);
+  margin-right: 0.55rem;
+  vertical-align: 0.08em;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.05em;
+  color: var(--fg-faint);
+  line-height: 1.6;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.legendSwatch {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border: 1px solid currentColor;
+}
+
+.legendSwatch[data-kind='documented'] {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+.legendSwatch[data-kind='not-reproduced'] {
+  border-style: dashed;
+  opacity: 0.6;
+}
+
+.microcopy {
+  margin-top: 1.1rem;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--fg-muted);
+  max-width: 58ch;
+}
+
+.microcopy b {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+@media (max-width: 620px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: left;
+    gap: 0.9rem;
+  }
+
+  .heroValue {
+    font-size: clamp(1.35rem, 7vw, 2rem);
+  }
+
+  .heroValue--signal {
+    font-size: clamp(1.6rem, 9vw, 2.5rem);
+  }
+
+  .connector {
+    grid-auto-flow: column;
+    justify-items: start;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .connectorLine {
+    width: clamp(40px, 22vw, 90px);
+    height: 1px;
+    background: linear-gradient(90deg, var(--orange), transparent);
+  }
+}
+
+/* =====================================================================
+   VISUAL 2 — RETURNS STRUCTURE
+   ===================================================================== */
+
+.returns {
+  display: grid;
+  grid-template-columns: minmax(0, 190px) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 1.75rem);
+  align-items: start;
+}
+
+.returnList {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.returnTab {
+  display: grid;
+  gap: 0.25rem;
+  text-align: left;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--ink-0);
+  transition:
+    border-color var(--dur-2) var(--ease),
+    background var(--dur-2) var(--ease);
+  position: relative;
+  min-height: 56px;
+}
+
+.returnTab::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  bottom: -1px;
+  width: 2px;
+  background: var(--orange);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform var(--dur-3) var(--ease);
+}
+
+.returnTab:hover {
+  border-color: var(--line-mid);
+}
+
+.returnTab[aria-selected='true'] {
+  border-color: var(--line-orange);
+  background: var(--orange-a08);
+}
+
+.returnTab[aria-selected='true']::before {
+  transform: scaleY(1);
+}
+
+.returnId {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--fg-muted);
+}
+
+.returnTab[aria-selected='true'] .returnId {
+  color: var(--orange-bright);
+}
+
+.returnRole {
+  font-size: 0.6875rem;
+  color: var(--fg-faint);
+  letter-spacing: 0.02em;
+}
+
+.returnPanel {
+  display: grid;
+  gap: 1.1rem;
+  min-width: 0;
+}
+
+.returnStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  border: 1px solid var(--line-mid);
+  padding: 0.32rem 0.55rem;
+  justify-self: start;
+}
+
+.returnStatus[data-blank='true'] {
+  color: var(--ev-unresolved);
+  border-style: dashed;
+}
+
+/* The field grid: rows of the return, columns for count and amount. */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) repeat(2, minmax(72px, 110px));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.gridCell {
+  background: var(--ink-1);
+  padding: 0.6rem 0.7rem;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.gridHead {
+  background: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  min-height: 36px;
+}
+
+.gridRowLabel {
+  font-size: 0.8125rem;
+  color: var(--fg-muted);
+}
+
+.gridCell[data-focus='true'] {
+  background: var(--orange-a08);
+}
+
+.gridCell[data-focus='true'] .gridRowLabel {
+  color: var(--fg);
+  font-weight: 500;
+}
+
+/* Field-state marks. Shape carries the meaning; colour reinforces it. */
+.state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stateMark {
+  width: 11px;
+  height: 11px;
+  flex: none;
+  border: 1px solid currentColor;
+  position: relative;
+}
+
+.state[data-state='present'] {
+  color: var(--orange-bright);
+}
+
+.state[data-state='present'] .stateMark {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+.state[data-state='blank'] {
+  color: var(--ev-calculated);
+}
+
+.state[data-state='blank'] .stateMark {
+  background: repeating-linear-gradient(
+    45deg,
+    currentColor 0 1px,
+    transparent 1px 4px
+  );
+}
+
+.state[data-state='absent'] {
+  color: var(--ev-unresolved);
+}
+
+.state[data-state='absent'] .stateMark {
+  border-style: dashed;
+}
+
+.state[data-state='absent'] .stateMark::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: linear-gradient(
+    135deg,
+    transparent 45%,
+    currentColor 45% 55%,
+    transparent 55%
+  );
+}
+
+.observation {
+  border-left: 2px solid var(--orange);
+  background: var(--ink-2);
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--fg);
+}
+
+.observation b {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+}
+
+@media (max-width: 720px) {
+  .returns {
+    grid-template-columns: 1fr;
+  }
+
+  .returnList {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+
+  .returnTab {
+    padding: 0.6rem 0.5rem;
+  }
+
+  .returnTab::before {
+    left: -1px;
+    right: -1px;
+    top: -1px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+    transform: scaleX(0);
+  }
+
+  .returnTab[aria-selected='true']::before {
+    transform: scaleX(1);
+  }
+
+  .returnRole {
+    display: none;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr) repeat(2, minmax(60px, 84px));
+  }
+
+  .gridCell {
+    padding: 0.5rem 0.45rem;
+  }
+
+  .state span:last-child {
+    display: none;
+  }
+}
+
+/* =====================================================================
+   VISUAL 3 — NUMBER VS AMOUNT
+   ===================================================================== */
+
+.modes {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 1.9rem);
+}
+
+.mode {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.modeHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.modeName {
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.spread {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  padding: 0.22rem 0.45rem;
+  border: 1px solid currentColor;
+  color: var(--fg-dim);
+}
+
+.spread[data-sign='up'] {
+  color: var(--orange-bright);
+}
+
+.spread[data-sign='down'] {
+  color: var(--ev-calculated);
+}
+
+.bars {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) 5rem;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modeCounts {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+}
+
+.barLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.barTrack {
+  height: 20px;
+  background: var(--ink-0);
+  border: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ticks every 10% — the bar is a measuring instrument, not a progress bar. */
+.barTrack::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 calc(10% - 1px),
+    var(--line) calc(10% - 1px) 10%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.barFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--w, 0%);
+  transition: width var(--dur-5) var(--ease);
+}
+
+.barFill[data-series='number'] {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--orange-a32) 0 3px,
+    rgba(255, 90, 0, 0.12) 3px 7px
+  );
+  border-right: 1px solid var(--orange);
+}
+
+.barFill[data-series='amount'] {
+  background: linear-gradient(90deg, var(--orange), var(--orange-hot));
+}
+
+.barValue {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: right;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+  display: grid;
+  gap: 0.12rem;
+  justify-items: end;
+}
+
+.barPrinted {
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.modeReading {
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--fg-muted);
+  max-width: 62ch;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--line-mid);
+}
+
+.residual {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.1rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px dashed var(--line-mid);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.05em;
+  color: var(--fg-dim);
+  line-height: 1.7;
+}
+
+.residualTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ev-calculated);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.5625rem;
+  border: 1px solid currentColor;
+  padding: 0.22rem 0.42rem;
+  flex: none;
+}
+
+.residualValue {
+  color: var(--fg);
+}
+
+@media (max-width: 560px) {
+  .bar {
+    grid-template-columns: 4.2rem minmax(0, 1fr) 4.2rem;
+    gap: 0.5rem;
+  }
+
+  .barLabel {
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* ---------------- Reconciliation view ---------------- */
+
+.recon {
+  margin-top: 1.35rem;
+  border: 1px dashed var(--line-mid);
+  padding: clamp(0.9rem, 2.5vw, 1.25rem);
+  display: grid;
+  gap: 0.9rem;
+}
+
+.reconLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.reconTag {
+  color: var(--ev-calculated);
+  border: 1px solid currentColor;
+  padding: 0.22rem 0.42rem;
+  letter-spacing: 0.16em;
+}
+
+.reconList {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+
+.reconRow {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: 0.5rem 1.25rem;
+  padding-block: 0.7rem;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+
+.reconRowLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  margin: 0;
+}
+
+.reconRowWorking {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+.reconResidual {
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ev-calculated);
+  border: 1px solid currentColor;
+  padding: 0.18rem 0.38rem;
+  flex: none;
+}
+
+.reconResidual[data-exact='true'] {
+  color: var(--orange-bright);
+}
+
+@media (max-width: 700px) {
+  .reconRow {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+}
+
+/* ---------------- Returns: stance, scope, apparatus ---------------- */
+
+.returnTab[data-stance='against']::before {
+  background: var(--ev-unresolved);
+}
+
+.returnTab[data-stance='against'][aria-selected='true'] {
+  border-color: var(--line-strong);
+  background: rgba(242, 240, 234, 0.045);
+}
+
+.returnTab[data-stance='against'][aria-selected='true'] .returnId {
+  color: var(--fg);
+}
+
+.returnMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.returnStance {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.32rem 0.55rem;
+  border: 1px solid currentColor;
+}
+
+.returnStance[data-stance='supports'] {
+  color: var(--orange-bright);
+}
+
+.returnStance[data-stance='against'] {
+  color: var(--ev-unresolved);
+}
+
+.returnScope {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+  line-height: 1.6;
+}
+
+.returnLocator {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.04em;
+  color: var(--fg-faint);
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.observation[data-stance='against'] {
+  border-left-color: var(--ev-unresolved);
+}
+
+.observation[data-stance='against'] b {
+  color: var(--fg);
+}
+
+.apparatus {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  padding-top: clamp(1.25rem, 3vw, 1.75rem);
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 1rem;
+}
+
+.apparatusHead {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.apparatusGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 1.35fr);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.apparatusCell {
+  background: var(--ink-1);
+  padding: 0.7rem 0.8rem;
+  display: flex;
+  align-items: center;
+  min-height: 54px;
+}
+
+.apparatusHeadCell {
+  background: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  min-height: 36px;
+}
+
+.apparatusLabel {
+  font-size: 0.8125rem;
+  color: var(--fg-muted);
+}
+
+.apparatusMark {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.55rem;
+}
+
+.apparatusDot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border: 1px solid var(--ev-unresolved);
+  border-style: dashed;
+  margin-top: 0.25rem;
+}
+
+.apparatusMark[data-has='true'] .apparatusDot {
+  background: var(--orange);
+  border: 1px solid var(--orange);
+}
+
+.apparatusDetail {
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: var(--fg-dim);
+  overflow-wrap: anywhere;
+}
+
+.apparatusMark[data-has='true'] .apparatusDetail {
+  color: var(--fg-muted);
+}
+
+@media (max-width: 720px) {
+  .apparatusGrid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .apparatusCell {
+    padding: 0.55rem 0.5rem;
+    align-items: flex-start;
+  }
+
+  .apparatusDetail {
+    font-size: 0.6875rem;
+  }
+}
+
+/* ---------------- The narrative mismatch panel ---------------- */
+
+.mismatch {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  padding-top: clamp(1.25rem, 3vw, 1.75rem);
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 1rem;
+}
+
+.mismatchHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  color: var(--fg-faint);
+  line-height: 1.6;
+}
+
+.mismatchTag {
+  color: var(--orange-bright);
+  border: 1px solid currentColor;
+  padding: 0.24rem 0.45rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.5625rem;
+  flex: none;
+}
+
+.mismatchRows {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.mismatchRow {
+  background: var(--ink-1);
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.1fr) minmax(0, 1.4fr);
+  gap: 0.75rem 1rem;
+  padding: 0.85rem 0.9rem;
+  align-items: start;
+}
+
+.mismatchLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.mismatchStated,
+.mismatchActual {
+  display: grid;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--fg-muted);
+}
+
+.mismatchActual[data-mismatch='true'] {
+  color: var(--orange-bright);
+}
+
+.mismatchBasis {
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  color: var(--fg-faint);
+  line-height: 1.55;
+  text-transform: none;
+}
+
+.mismatchTotal {
+  background: var(--orange-a08);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  padding: 0.85rem 0.9rem;
+}
+
+.mismatchTotalValue {
+  font-family: var(--font-mono);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 500;
+  color: var(--orange-bright);
+  letter-spacing: -0.02em;
+}
+
+.mismatchBody {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--fg-muted);
+  max-width: 64ch;
+}
+
+.mismatchFollowing {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.75;
+  color: var(--fg-dim);
+  border-left: 1px solid var(--line-mid);
+  padding-left: 0.9rem;
+  max-width: 66ch;
+}
+
+@media (max-width: 640px) {
+  .mismatchRow {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+}

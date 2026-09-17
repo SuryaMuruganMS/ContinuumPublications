@@ -1,0 +1,638 @@
+/* ---------------------------------------------------------------------
+   Keyframes are declared locally in every module that uses them.
+   CSS Modules scopes @keyframes names, so a module referencing a keyframe
+   defined in a global stylesheet silently animates nothing.
+   --------------------------------------------------------------------- */
+
+@keyframes u-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* =====================================================================
+   THE EVIDENCE SYSTEM
+   Citation marker · drawer · index rail.
+   Colour, marker shape and label all carry the state, so the system never
+   depends on colour alone.
+   ===================================================================== */
+
+.kind {
+  --ev: var(--fg-muted);
+  --ev-bg: rgba(242, 240, 234, 0.08);
+}
+
+.kind[data-kind='documented'] {
+  --ev: var(--ev-documented);
+  --ev-bg: var(--ev-documented-bg);
+}
+
+.kind[data-kind='calculated'] {
+  --ev: var(--ev-calculated);
+  --ev-bg: var(--ev-calculated-bg);
+}
+
+.kind[data-kind='analysis'] {
+  --ev: var(--ev-analysis);
+  --ev-bg: var(--ev-analysis-bg);
+}
+
+.kind[data-kind='reported'] {
+  --ev: var(--ev-reported);
+  --ev-bg: var(--ev-reported-bg);
+}
+
+.kind[data-kind='unresolved'] {
+  --ev: var(--ev-unresolved);
+  --ev-bg: var(--ev-unresolved-bg);
+}
+
+/* ---------------- Marker glyph ----------------
+   documented  ■ filled
+   calculated  ▣ filled with a cut
+   analysis    ◨ half
+   unresolved  ▢ hollow, dashed
+*/
+
+.glyph {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border: 1px solid var(--ev);
+  position: relative;
+}
+
+.glyph[data-kind='documented'] {
+  background: var(--ev);
+}
+
+.glyph[data-kind='calculated'] {
+  background: linear-gradient(135deg, var(--ev) 0 50%, transparent 50% 100%);
+}
+
+.glyph[data-kind='analysis'] {
+  background: linear-gradient(90deg, var(--ev) 0 50%, transparent 50% 100%);
+}
+
+.glyph[data-kind='reported'] {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--ev) 0 1px,
+    transparent 1px 3px
+  );
+}
+
+.glyph[data-kind='unresolved'] {
+  border-style: dashed;
+  background: none;
+}
+
+/* =====================================================================
+   CITATION MARKER (inline, in the reading column)
+   ===================================================================== */
+
+.ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28em;
+  vertical-align: baseline;
+  margin-left: 0.18em;
+  padding: 0.1em 0.34em 0.1em 0.28em;
+  font-family: var(--font-mono);
+  font-size: 0.66em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  color: var(--ev);
+  background: var(--ev-bg);
+  border: 1px solid transparent;
+  border-bottom-color: var(--ev);
+  transition:
+    background var(--dur-2) var(--ease),
+    border-color var(--dur-2) var(--ease),
+    opacity var(--dur-3) var(--ease),
+    transform var(--dur-2) var(--ease);
+  position: relative;
+  top: -0.12em;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ref:hover,
+.ref[data-open='true'] {
+  border-color: var(--ev);
+  transform: translateY(-1px);
+}
+
+.ref[data-open='true'] {
+  background: var(--ev);
+  color: var(--ink-0);
+}
+
+.ref[data-open='true'] .glyph {
+  border-color: var(--ink-0);
+  background: var(--ink-0);
+}
+
+/* Dimmed when the Evidence Index is isolating another state. */
+.ref[data-dim='true'] {
+  opacity: 0.22;
+}
+
+/* Lit when the Evidence Index is isolating this state. */
+.ref[data-lit='true'] {
+  border-color: var(--ev);
+  box-shadow: 0 0 0 3px var(--ev-bg);
+}
+
+/* A static, non-interactive marker (previews, no provider). */
+.refStatic {
+  cursor: default;
+}
+
+/* =====================================================================
+   DRAWER
+   ===================================================================== */
+
+.drawerScrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-drawer);
+  background: rgba(3, 3, 3, 0.5);
+  animation: u-fade var(--dur-2) var(--ease) both;
+}
+
+.drawer {
+  position: fixed;
+  z-index: calc(var(--z-drawer) + 1);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(460px, 100%);
+  background: var(--ink-1);
+  border-left: 1px solid var(--line-mid);
+  box-shadow: var(--shadow-2);
+  display: flex;
+  flex-direction: column;
+  animation: drawer-in var(--dur-3) var(--ease) both;
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* The orange spine: the drawer is an evidence object, and it says so. */
+.drawer::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--ev, var(--orange));
+}
+
+.drawerHead {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  flex: none;
+}
+
+.drawerState {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ev);
+}
+
+.drawerId {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-faint);
+  margin-left: auto;
+}
+
+.drawerClose {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line-mid);
+  color: var(--fg-muted);
+  flex: none;
+  transition:
+    color var(--dur-1) var(--ease),
+    border-color var(--dur-1) var(--ease);
+}
+
+.drawerClose:hover {
+  color: var(--fg);
+  border-color: var(--line-strong);
+}
+
+.drawerBody {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  flex: 1;
+  padding: 1.25rem 1.1rem 2rem;
+  display: grid;
+  gap: 1.35rem;
+  align-content: start;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.fieldLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+.fieldValue {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+
+.fieldValue--mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--orange-bright);
+  line-height: 1.6;
+}
+
+.fieldValue--muted {
+  color: var(--fg-muted);
+  font-size: 0.875rem;
+}
+
+/* The extract. Set as a document fragment, with an orange rule at its head. */
+.quote {
+  border-left: 2px solid var(--ev);
+  background: var(--ink-2);
+  padding: 0.85rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--fg);
+}
+
+.working {
+  border: 1px dashed var(--line-mid);
+  padding: 0.85rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.7;
+  color: var(--fg-muted);
+  overflow-wrap: anywhere;
+}
+
+.standard {
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--fg-dim);
+  border-top: 1px solid var(--line);
+  padding-top: 1.1rem;
+}
+
+.sourceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--orange-bright);
+  border-bottom: 1px solid var(--orange-a32);
+  padding-bottom: 0.2rem;
+  align-self: start;
+  transition: border-color var(--dur-2) var(--ease);
+}
+
+.sourceLink:hover {
+  border-bottom-color: var(--orange);
+}
+
+.drawerFoot {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.1rem calc(0.7rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line);
+  flex: none;
+  background: var(--ink-1);
+}
+
+.step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  height: 34px;
+  padding-inline: 0.7rem;
+  border: 1px solid var(--line-mid);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  transition:
+    color var(--dur-1) var(--ease),
+    border-color var(--dur-1) var(--ease);
+}
+
+.step:hover {
+  color: var(--fg);
+  border-color: var(--line-orange);
+}
+
+.position {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--fg-faint);
+  margin-inline: auto;
+}
+
+.copy {
+  composes: step;
+}
+
+.copy[data-copied='true'] {
+  color: var(--orange-bright);
+  border-color: var(--orange);
+}
+
+@media (max-width: 700px) {
+  .drawer {
+    top: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: 82vh;
+    border-left: 0;
+    border-top: 1px solid var(--line-mid);
+    animation-name: drawer-up;
+  }
+
+  .drawer::before {
+    left: 0;
+    right: 0;
+    top: -1px;
+    bottom: auto;
+    width: auto;
+    height: 2px;
+  }
+
+  @keyframes drawer-up {
+    from {
+      transform: translateY(28px);
+      opacity: 0;
+    }
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  .drawerFoot {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+
+  .step {
+    height: 42px;
+  }
+}
+
+/* =====================================================================
+   EVIDENCE INDEX — the persistent rail
+   ===================================================================== */
+
+.index {
+  display: grid;
+  gap: 0;
+  border: 1px solid var(--line);
+  background: var(--ink-1);
+}
+
+.indexHead {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.indexTitle {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.indexTotal {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  color: var(--orange);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.62rem 0.8rem;
+  border-bottom: 1px solid var(--line);
+  transition: background var(--dur-2) var(--ease);
+  position: relative;
+}
+
+.row:last-of-type {
+  border-bottom: 0;
+}
+
+.row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--ev);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--dur-2) var(--ease);
+}
+
+.row:hover {
+  background: var(--ev-bg);
+}
+
+.row:hover::before,
+.row[data-on='true']::before {
+  transform: scaleY(1);
+}
+
+.row[data-on='true'] {
+  background: var(--ev-bg);
+}
+
+.rowLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row[data-on='true'] .rowLabel {
+  color: var(--fg);
+}
+
+.rowCount {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--ev);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.indexFoot {
+  padding: 0.65rem 0.8rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: var(--fg-faint);
+}
+
+.indexReset {
+  color: var(--orange-bright);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ---------------- Assessment chip (reported sources only) ---------------- */
+
+.assessment {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+  padding: 0.3rem 0.5rem;
+  justify-self: start;
+}
+
+.assessment[data-assessment='correct'] {
+  color: var(--ev-documented);
+}
+
+.assessment[data-assessment='ambiguous'] {
+  color: var(--ev-calculated);
+}
+
+.assessment[data-assessment='misleading'],
+.assessment[data-assessment='incorrect'] {
+  color: var(--ev-reported);
+}
+
+.assessmentNote {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+/* ---------------- Provenance (reported sources) ---------------- */
+
+.provenance {
+  margin: 0;
+  display: grid;
+  border: 1px solid var(--line);
+  background: var(--ink-2);
+}
+
+.provenance > div {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.provenance > div:last-child {
+  border-bottom: 0;
+}
+
+.provenance dt {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  padding-top: 0.15rem;
+}
+
+.provenance dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  color: var(--fg-muted);
+  overflow-wrap: anywhere;
+}
+
+.provenance dd[data-status='VERIFIED'] {
+  color: var(--ev-documented);
+  letter-spacing: 0.06em;
+}
+
+.provenance dd a {
+  color: var(--orange-bright);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.provenanceUrl {
+  color: var(--fg-dim) !important;
+  font-size: 0.625rem !important;
+}

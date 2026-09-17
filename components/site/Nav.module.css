@@ -1,0 +1,467 @@
+/* ---------------------------------------------------------------------
+   Keyframes are declared locally in every module that uses them.
+   CSS Modules scopes @keyframes names, so a module referencing a keyframe
+   defined in a global stylesheet silently animates nothing.
+   --------------------------------------------------------------------- */
+
+@keyframes u-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes u-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  transition:
+    background var(--dur-3) var(--ease),
+    border-color var(--dur-3) var(--ease),
+    backdrop-filter var(--dur-3) var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+/* Compact "research bar" state. */
+.root[data-compact='true'] {
+  background: rgba(5, 5, 5, 0.86);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom-color: var(--line);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  height: 76px;
+  transition: height var(--dur-3) var(--ease);
+}
+
+.root[data-compact='true'] .inner {
+  height: var(--nav-h);
+}
+
+/* ---------------- Wordmark ---------------- */
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  flex: none;
+  position: relative;
+}
+
+.mark {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: var(--fg);
+  transition: color var(--dur-2) var(--ease);
+}
+
+.brand:hover .mark {
+  color: #fff;
+}
+
+/* The orange registration mark. A Continuum signature: it sits between the
+   wordmark and the descriptor like a document reference. */
+.dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  background: var(--orange);
+  align-self: center;
+  position: relative;
+  transition: transform var(--dur-3) var(--ease);
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 1px solid var(--orange);
+  opacity: 0;
+  transition: opacity var(--dur-2) var(--ease);
+}
+
+.brand:hover .dot::after {
+  opacity: 0.6;
+}
+
+.descriptor {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  white-space: nowrap;
+  max-width: 12rem;
+  overflow: hidden;
+  opacity: 1;
+  transition:
+    opacity var(--dur-3) var(--ease),
+    max-width var(--dur-3) var(--ease);
+}
+
+.root[data-compact='true'] .descriptor {
+  opacity: 0;
+  max-width: 0;
+}
+
+/* ---------------- Primary links ---------------- */
+
+.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.2vw, 2.1rem);
+  margin-left: auto;
+}
+
+.link {
+  position: relative;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--fg-muted);
+  padding-block: 0.5rem;
+  transition: color var(--dur-2) var(--ease);
+  white-space: nowrap;
+}
+
+.link:hover {
+  color: var(--fg);
+}
+
+/* Active indicator: a short orange rule that slides in from the left. */
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-3) var(--ease);
+}
+
+.link:hover::after {
+  transform: scaleX(0.35);
+}
+
+.link[data-active='true'] {
+  color: var(--fg);
+}
+
+.link[data-active='true']::after {
+  transform: scaleX(1);
+}
+
+/* ---------------- Utilities ---------------- */
+
+.utils {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+  margin-left: clamp(0.75rem, 2vw, 1.75rem);
+}
+
+.search {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 34px;
+  padding-inline: 0.7rem 0.5rem;
+  border: 1px solid var(--line-mid);
+  color: var(--fg-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  transition:
+    border-color var(--dur-2) var(--ease),
+    color var(--dur-2) var(--ease),
+    background var(--dur-2) var(--ease);
+}
+
+.search:hover {
+  border-color: var(--line-orange);
+  color: var(--fg);
+  background: var(--orange-a08);
+}
+
+.searchLabel {
+  min-width: 5.5rem;
+  text-align: left;
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  line-height: 1;
+  padding: 0.28rem 0.34rem;
+  border: 1px solid var(--line-mid);
+  color: var(--fg-dim);
+  background: var(--ink-2);
+}
+
+.subscribe {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding-inline: 0.95rem;
+  border: 1px solid var(--orange);
+  color: var(--orange-bright);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background var(--dur-2) var(--ease),
+    color var(--dur-2) var(--ease);
+}
+
+.subscribe:hover {
+  background: var(--orange);
+  color: var(--fg-on-orange);
+}
+
+/* ---------------- Global scroll progress ----------------
+   A single hairline at the foot of the bar. It is the only always-on motion
+   in the chrome, and it reports position rather than decorating. */
+
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 1px;
+  width: 100%;
+  transform-origin: left center;
+  transform: scaleX(var(--progress, 0));
+  background: linear-gradient(90deg, var(--orange), var(--orange-hot));
+  opacity: 0;
+  transition: opacity var(--dur-3) var(--ease);
+}
+
+.root[data-compact='true'] .progress {
+  opacity: 1;
+}
+
+/* ---------------- Mobile ---------------- */
+
+.burger {
+  display: none;
+  width: 38px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line-mid);
+  color: var(--fg);
+  flex: none;
+}
+
+.burger:hover {
+  border-color: var(--line-orange);
+}
+
+.burgerBars {
+  display: block;
+  width: 15px;
+  height: 9px;
+  position: relative;
+}
+
+.burgerBars::before,
+.burgerBars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transition: transform var(--dur-3) var(--ease);
+}
+
+.burgerBars::before {
+  top: 0;
+}
+
+.burgerBars::after {
+  bottom: 0;
+}
+
+.burger[aria-expanded='true'] .burgerBars::before {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.burger[aria-expanded='true'] .burgerBars::after {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+.searchIcon {
+  display: none;
+  width: 38px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line-mid);
+  color: var(--fg-muted);
+  flex: none;
+}
+
+.searchIcon:hover {
+  border-color: var(--line-orange);
+  color: var(--fg);
+}
+
+/* The mobile sheet. Opens downward from the bar as a document panel, not as
+   an overlay that hides where you were. */
+.sheet {
+  position: fixed;
+  inset: var(--nav-h) 0 0 0;
+  background: var(--ink-0);
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--sp-6) var(--gutter) calc(var(--sp-6) + env(safe-area-inset-bottom));
+  z-index: var(--z-nav);
+  overflow-y: auto;
+  animation: sheet-in var(--dur-3) var(--ease) both;
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.sheetNav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sheetLink {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-block: 1.05rem;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--step-2);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  animation: u-fade-up var(--dur-3) var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 45ms + 60ms);
+}
+
+.sheetLink[data-active='true'] {
+  color: var(--orange-bright);
+}
+
+.sheetIndex {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--fg-faint);
+  letter-spacing: 0.12em;
+}
+
+.sheetLink[data-active='true'] .sheetIndex {
+  color: var(--orange);
+}
+
+.sheetFoot {
+  display: grid;
+  gap: 0.75rem;
+  padding-top: var(--sp-6);
+  animation: u-fade-up var(--dur-3) var(--ease) both;
+  animation-delay: 280ms;
+}
+
+.sheetAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  padding-inline: 1rem;
+  border: 1px solid var(--line-mid);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--fg);
+}
+
+.sheetAction[data-signal='true'] {
+  border-color: var(--orange);
+  color: var(--orange-bright);
+}
+
+.sheetMeta {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  padding-top: var(--sp-5);
+}
+
+@media (max-width: 900px) {
+  .links,
+  .search,
+  .subscribe {
+    display: none;
+  }
+
+  .burger,
+  .searchIcon {
+    display: inline-flex;
+  }
+
+  .utils {
+    margin-left: auto;
+  }
+
+  .inner {
+    height: var(--nav-h);
+  }
+
+  .descriptor {
+    display: none;
+  }
+}
+
+@media (min-width: 901px) {
+  .sheet {
+    display: none;
+  }
+}

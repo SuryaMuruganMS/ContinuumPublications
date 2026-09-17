@@ -1,0 +1,179 @@
+.root {
+  position: relative;
+  border: 1px solid var(--line-mid);
+  background: var(--ink-2);
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  display: grid;
+  gap: 1.5rem;
+  overflow: hidden;
+}
+
+/* A single orange edge. The section is a signal, not a billboard. */
+.root::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--orange), transparent 78%);
+}
+
+.root[data-variant='bare'] {
+  border: 0;
+  background: none;
+  padding: 0;
+}
+
+.root[data-variant='bare']::before {
+  display: none;
+}
+
+.head {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 46ch;
+}
+
+.heading {
+  font-size: var(--step-2);
+  letter-spacing: -0.028em;
+  line-height: 1.15;
+}
+
+.sub {
+  color: var(--fg-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.form {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  align-items: stretch;
+  max-width: 34rem;
+}
+
+.field {
+  flex: 1 1 15rem;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  height: 50px;
+  background: var(--ink-0);
+  border: 1px solid var(--line-mid);
+  color: var(--fg);
+  padding-inline: 0.9rem;
+  font-size: 0.9375rem;
+  outline: none;
+  transition:
+    border-color var(--dur-2) var(--ease),
+    background var(--dur-2) var(--ease);
+}
+
+.input::placeholder {
+  color: var(--fg-faint);
+}
+
+.input:hover {
+  border-color: var(--line-strong);
+}
+
+.input:focus {
+  border-color: var(--orange);
+  background: var(--ink-1);
+}
+
+.input[aria-invalid='true'] {
+  border-color: var(--orange-hot);
+}
+
+.submit {
+  height: 50px;
+  padding-inline: 1.4rem;
+  background: var(--orange);
+  color: var(--fg-on-orange);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: none;
+  transition:
+    background var(--dur-2) var(--ease),
+    transform var(--dur-2) var(--ease);
+}
+
+.submit:hover {
+  background: var(--orange-hot);
+}
+
+.submit:active {
+  transform: translateY(1px);
+}
+
+.note {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.07em;
+  color: var(--fg-dim);
+  line-height: 1.7;
+  max-width: 52ch;
+}
+
+.note a {
+  color: var(--orange-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--orange-a50);
+}
+
+.error {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.07em;
+  color: var(--orange-hot);
+}
+
+/* Fallback path: no provider configured, so we hand the reader a real
+   mailto rather than a button that quietly does nothing. */
+.fallback {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  height: 50px;
+  padding-inline: 1.2rem;
+  border: 1px solid var(--orange);
+  color: var(--orange-bright);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition:
+    background var(--dur-2) var(--ease),
+    color var(--dur-2) var(--ease);
+}
+
+.fallback:hover {
+  background: var(--orange);
+  color: var(--fg-on-orange);
+}
+
+@media (max-width: 520px) {
+  .form {
+    flex-direction: column;
+  }
+
+  .submit,
+  .fallback {
+    justify-content: center;
+  }
+}

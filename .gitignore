@@ -1,0 +1,19 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+
+# Private snapshots of third-party pages. Hashes are in the manifest; the pages are not ours to redistribute.
+archive/sources/raw/
+.cache/
+
+# Internal editorial working files (drafts, planning, evidence workbooks).
+# Kept locally; this repository is public.
+Article Evidence and Foundations/
+
+# Local editor / preview config
+.claude/

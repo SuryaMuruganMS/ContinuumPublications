@@ -1,0 +1,375 @@
+/* =====================================================================
+   EDITORIAL PAGE CHROME
+   Shared by Methods, Standards, About, Corrections, Contact, Subscribe,
+   Privacy, Terms, Colophon, Research and the archive.
+   ===================================================================== */
+
+.page {
+  padding-top: calc(var(--nav-h) + clamp(2rem, 6vw, 4.5rem));
+}
+
+.header {
+  padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.headerGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: end;
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+  margin-bottom: clamp(1rem, 2.5vw, 1.6rem);
+}
+
+.kicker::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-left: 1px solid currentColor;
+  border-top: 1px solid currentColor;
+  flex: none;
+}
+
+.title {
+  font-size: var(--step-4);
+  font-weight: 600;
+  letter-spacing: -0.038em;
+  line-height: 1.02;
+  max-width: 17ch;
+}
+
+.deck {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 0.93rem + 0.45vw, 1.1875rem);
+  line-height: 1.65;
+  color: var(--fg-muted);
+  max-width: 52ch;
+}
+
+.headerMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.2rem;
+  margin-top: 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+@media (max-width: 880px) {
+  .headerGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+}
+
+/* ---------------- Body ---------------- */
+
+.body {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) var(--sp-9);
+}
+
+/* Two-column editorial layout: a sticky contents rail beside the prose. */
+.split {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.rail {
+  position: sticky;
+  top: calc(var(--nav-h) + 1.5rem);
+  align-self: start;
+}
+
+.railHead {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 0.6rem;
+}
+
+.railList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.05rem;
+}
+
+.railLink {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.4rem 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--fg-dim);
+  transition: color var(--dur-2) var(--ease);
+}
+
+.railLink:hover,
+.railLink[data-active='true'] {
+  color: var(--fg);
+}
+
+.railIndex {
+  font-family: var(--font-mono);
+  font-size: 0.5625rem;
+  color: var(--fg-faint);
+  flex: none;
+}
+
+.railLink:hover .railIndex,
+.railLink[data-active='true'] .railIndex {
+  color: var(--orange);
+}
+
+@media (max-width: 1000px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .rail {
+    position: static;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 1.25rem;
+  }
+
+  .railList {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .railList::-webkit-scrollbar {
+    display: none;
+  }
+
+  .railLink {
+    white-space: nowrap;
+    padding-right: 1.1rem;
+  }
+}
+
+/* ---------------- Numbered editorial sections ---------------- */
+
+.sections {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 4rem);
+}
+
+.section {
+  scroll-margin-top: calc(var(--nav-h) + 2.5rem);
+  display: grid;
+  gap: clamp(0.9rem, 2vw, 1.25rem);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.sectionIndex {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--orange);
+  flex: none;
+}
+
+.sectionTitle {
+  font-size: var(--step-2);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  line-height: 1.15;
+}
+
+/* ---------------- Callout ---------------- */
+
+.callout {
+  border: 1px solid var(--line-mid);
+  background: var(--ink-1);
+  padding: clamp(1.1rem, 3vw, 1.65rem);
+  display: grid;
+  gap: 0.7rem;
+  position: relative;
+}
+
+.callout::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--orange);
+}
+
+.calloutLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+}
+
+.calloutBody {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--fg-muted);
+}
+
+.calloutBody a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--orange-a50);
+}
+
+/* ---------------- Empty state ---------------- */
+
+.empty {
+  border: 1px dashed var(--line-mid);
+  padding: clamp(2rem, 6vw, 4rem) clamp(1.25rem, 4vw, 2.5rem);
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.emptyMark {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.emptyTitle {
+  font-size: var(--step-2);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  max-width: 22ch;
+}
+
+.emptyBody {
+  color: var(--fg-muted);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  max-width: 56ch;
+}
+
+/* ---------------- Buttons ---------------- */
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  height: 48px;
+  padding-inline: 1.2rem;
+  border: 1px solid var(--line-mid);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  justify-self: start;
+  transition:
+    color var(--dur-2) var(--ease),
+    border-color var(--dur-2) var(--ease),
+    background var(--dur-2) var(--ease);
+}
+
+.action:hover {
+  color: var(--fg);
+  border-color: var(--line-orange);
+  background: var(--orange-a08);
+}
+
+.action[data-signal='true'] {
+  border-color: var(--orange);
+  color: var(--orange-bright);
+}
+
+.action[data-signal='true']:hover {
+  background: var(--orange);
+  color: var(--fg-on-orange);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* ---------------- Generic data grid ---------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+.gridCell {
+  background: var(--ink-1);
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+}
+
+.gridLabel {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange-bright);
+}
+
+.gridTitle {
+  font-size: var(--step-1);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.2;
+}
+
+.gridBody {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--fg-muted);
+}
+
+.footer {
+  margin-top: clamp(3rem, 7vw, 5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--line);
+}

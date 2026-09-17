@@ -1,0 +1,135 @@
+/* =====================================================================
+   CONTINUUM — DESIGN TOKENS
+   ---------------------------------------------------------------------
+   ▸ EDIT COLOURS HERE. Nothing else in the codebase hard-codes a hex value.
+   ▸ EDIT TYPE SCALE HERE. Font families are bound in app/layout.tsx via
+     next/font, and exposed to CSS as --font-sans / --font-serif / --font-mono.
+
+   The system: BLACK is the information space. ORANGE is the evidence signal.
+   Orange is never used for large fills — only for marks, states, figures
+   and the things a reader is meant to act on.
+   ===================================================================== */
+
+:root {
+  /* ---------------- Ground ---------------- */
+  --ink-0: #050505; /* page */
+  --ink-1: #0b0b0b; /* secondary ground, alternating bands */
+  --ink-2: #111111; /* surface */
+  --ink-3: #171717; /* elevated surface */
+  --ink-4: #1f1f1f; /* raised / hover */
+  --ink-5: #292929; /* pressed / active chrome */
+
+  /* ---------------- Type ---------------- */
+  /* Every text colour below clears WCAG AA (4.5:1) for small text against
+     every surface in the ground ramp, including --ink-3. Checked, not eyeballed:
+     fg 17.9 · muted 8.3 · dim 5.8+ · faint 4.5+ */
+  --fg: #f2f0ea; /* warm off-white */
+  --fg-muted: #a5a5a5;
+  --fg-dim: #949494;
+  --fg-faint: #808080;
+  --fg-on-orange: #120500;
+
+  /* ---------------- Signal ---------------- */
+  --orange: #ff5a00;
+  --orange-bright: #ff6a00;
+  --orange-hot: #ff7a18;
+  --orange-tint: #ffa04d;
+
+  --orange-a08: rgba(255, 90, 0, 0.08);
+  --orange-a12: rgba(255, 90, 0, 0.12);
+  --orange-a20: rgba(255, 90, 0, 0.2);
+  --orange-a32: rgba(255, 90, 0, 0.32);
+  --orange-a50: rgba(255, 90, 0, 0.5);
+  --orange-glow: rgba(255, 90, 0, 0.22);
+
+  /* ---------------- Lines ---------------- */
+  --line: rgba(242, 240, 234, 0.08);
+  --line-mid: rgba(242, 240, 234, 0.14);
+  --line-strong: rgba(242, 240, 234, 0.24);
+  --line-orange: rgba(255, 90, 0, 0.34);
+
+  /* ---------------- Evidence states ----------------
+     Differentiated by hue AND by marker shape AND by underline style,
+     so the system never depends on colour alone. See components/article. */
+  --ev-documented: #ff6a00;
+  --ev-calculated: #ffa04d;
+  --ev-analysis: #f2f0ea;
+  --ev-reported: #c9713a;
+  --ev-unresolved: #9a9a9a;
+
+  --ev-documented-bg: rgba(255, 106, 0, 0.13);
+  --ev-calculated-bg: rgba(255, 160, 77, 0.12);
+  --ev-analysis-bg: rgba(242, 240, 234, 0.09);
+  --ev-reported-bg: rgba(201, 113, 58, 0.14);
+  --ev-unresolved-bg: rgba(154, 154, 154, 0.11);
+
+  /* ---------------- Type scale ----------------
+     Fluid between a 360px and a 1440px viewport. */
+  --step--2: clamp(0.688rem, 0.66rem + 0.12vw, 0.75rem);
+  --step--1: clamp(0.8rem, 0.77rem + 0.15vw, 0.875rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.18vw, 1.0625rem);
+  --step-1: clamp(1.1rem, 1.03rem + 0.35vw, 1.375rem);
+  --step-2: clamp(1.35rem, 1.2rem + 0.7vw, 1.875rem);
+  --step-3: clamp(1.65rem, 1.35rem + 1.4vw, 2.625rem);
+  --step-4: clamp(2rem, 1.45rem + 2.6vw, 3.75rem);
+  --step-5: clamp(2.4rem, 1.4rem + 4.6vw, 5.5rem);
+  --step-6: clamp(2.9rem, 1.1rem + 8vw, 8rem);
+
+  /* Reading column type, tuned separately from UI type. */
+  --read-size: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --read-leading: 1.72;
+
+  /* ---------------- Space ---------------- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+  --sp-10: 8rem;
+  --section-y: clamp(4rem, 9vw, 8.5rem);
+
+  /* ---------------- Measure & layout ---------------- */
+  --page-max: 1440px;
+  --gutter: clamp(1.15rem, 4vw, 3.5rem);
+  --measure: 68ch;
+  --nav-h: 60px;
+
+  /* ---------------- Motion ----------------
+     Durations are short. The site should feel instrumented, not animated. */
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 340ms;
+  --dur-4: 560ms;
+  --dur-5: 900ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* out-expo-ish */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ---------------- Radii & elevation ----------------
+     Deliberately near-square. This is a document interface. */
+  --r-0: 0px;
+  --r-1: 2px;
+  --r-2: 3px;
+  --r-pill: 999px;
+
+  --shadow-1: 0 1px 0 rgba(242, 240, 234, 0.04);
+  --shadow-2: 0 18px 50px -24px rgba(0, 0, 0, 0.9);
+  --shadow-orange: 0 0 0 1px var(--orange-a32), 0 10px 40px -18px var(--orange-glow);
+
+  --z-nav: 60;
+  --z-rail: 50;
+  --z-drawer: 80;
+  --z-overlay: 90;
+  --z-skip: 100;
+}
+
+/* The site is dark by design — it is not a theme toggle, it is the identity.
+   We still declare the scheme so form controls and scrollbars match. */
+:root {
+  color-scheme: dark;
+  accent-color: var(--orange);
+}
