@@ -1,4 +1,5 @@
 import { Fragment, type ReactNode } from 'react';
+import Link from 'next/link';
 import { CitationRef } from '@/components/article/CitationRef';
 import type { Source } from '@/types/content';
 
@@ -8,13 +9,19 @@ import type { Source } from '@/types/content';
  *   [[S4]]        an interactive evidence reference
  *   *emphasis*    <em>
  *   `18,521.02`   a tabular figure, set in mono
+ *   [text](/path) a link to another page on this site
+ *
+ * Links are internal only — the pattern requires a leading slash. An outbound
+ * link in body copy belongs in a source record, where it carries a locator and
+ * a retrieval date, rather than buried in a sentence.
  *
  * There is no general-purpose markdown here on purpose. Body copy on this site
  * is written by a person into a typed structure, not pasted from elsewhere, and
  * a small grammar means the output is predictable and the bundle stays small.
  */
 
-const TOKEN = /(\[\[[A-Za-z0-9_-]+\]\]|\*[^*\n]+\*|`[^`\n]+`)/g;
+const TOKEN = /(\[\[[A-Za-z0-9_-]+\]\]|\[[^\]\n]+\]\(\/[^)\s]*\)|\*[^*\n]+\*|`[^`\n]+`)/g;
+const LINK = /^\[([^\]\n]+)\]\((\/[^)\s]*)\)$/;
 
 export interface RichTextProps {
   text: string;
@@ -39,6 +46,17 @@ export function RichText({ text, sources = [], plain = false }: RichTextProps) {
           return <CitationRef key={key} source={source} />;
         }
 
+        const link = LINK.exec(part);
+        if (link) {
+          const [, label, href] = link;
+          if (plain) return <Fragment key={key}>{label}</Fragment>;
+          return (
+            <Link key={key} href={href} className="rt-link">
+              {label}
+            </Link>
+          );
+        }
+
         if (part.startsWith('*') && part.endsWith('*') && part.length > 2) {
           return <em key={key}>{part.slice(1, -1)}</em>;
         }
@@ -61,6 +79,7 @@ export function RichText({ text, sources = [], plain = false }: RichTextProps) {
 export function toPlainText(text: string): string {
   return text
     .replace(/\[\[[A-Za-z0-9_-]+\]\]/g, '')
+    .replace(/\[([^\]\n]+)\]\(\/[^)\s]*\)/g, '$1')
     .replace(/\*([^*\n]+)\*/g, '$1')
     .replace(/`([^`\n]+)`/g, '$1')
     .replace(/\s+/g, ' ')

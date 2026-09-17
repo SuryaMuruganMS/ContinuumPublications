@@ -341,6 +341,15 @@ async function main() {
       title:
         'IRDAI’s health claims table prints ₹18,521 crore against a disallowed count of 0.00 lakh',
     },
+    {
+      slug: 'disallowed-vs-repudiated-claims-irdai',
+      index: 'NOTE 0002',
+      figure: '₹18,521.02',
+      counterFigure: '29.51 lakh',
+      label: 'IRDAI · DISALLOWED vs REPUDIATED',
+      title:
+        'Disallowed vs repudiated claims in IRDAI health data: what each row shows',
+    },
   ];
 
   const cards = [

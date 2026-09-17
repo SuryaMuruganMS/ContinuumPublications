@@ -157,6 +157,23 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* An internal link inside body copy. Underlined rather than coloured alone,
+   so it does not read as an evidence marker — orange in the reading column
+   means a citation. */
+.rt-link {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--orange);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: color var(--dur-2) var(--ease), text-decoration-color var(--dur-2) var(--ease);
+}
+
+.rt-link:hover {
+  color: var(--orange-bright);
+  text-decoration-color: var(--orange-bright);
+}
+
 .rt-mark {
   background: var(--orange-a20);
   color: var(--fg);

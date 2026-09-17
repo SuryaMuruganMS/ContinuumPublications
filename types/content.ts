@@ -147,7 +147,11 @@ export type Block =
     }
   | { type: 'divider' };
 
-export type VisualKey = 'table-i29' | 'returns-structure' | 'number-vs-amount';
+export type VisualKey =
+  | 'table-i29'
+  | 'returns-structure'
+  | 'number-vs-amount'
+  | 'field-comparison';
 
 export interface ArticleSection {
   /** URL fragment. Stable — these get linked to. */

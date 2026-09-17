@@ -2,6 +2,7 @@ import type { VisualKey } from '@/types/content';
 import { TableI29 } from './TableI29';
 import { ReturnsStructure } from './ReturnsStructure';
 import { NumberVsAmount } from './NumberVsAmount';
+import { FieldComparison } from './FieldComparison';
 
 /**
  * Visuals are referenced from article content by key, never imported into it.
@@ -14,6 +15,7 @@ export const visuals: Record<VisualKey, () => React.JSX.Element> = {
   'table-i29': TableI29,
   'returns-structure': ReturnsStructure,
   'number-vs-amount': NumberVsAmount,
+  'field-comparison': FieldComparison,
 };
 
 export function Visual({ component }: { component: VisualKey }) {

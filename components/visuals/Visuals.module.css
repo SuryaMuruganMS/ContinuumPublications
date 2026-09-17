@@ -1270,3 +1270,136 @@
     gap: 0.6rem;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Figure 04 — disallowed against repudiated                          */
+/* ------------------------------------------------------------------ */
+
+/* A real table: this is tabular data, and a <dl> here inherits the prose
+   definition-list grid, which is built for term/meaning pairs on the policy
+   pages and collapses a three-column row into two. */
+
+.compare {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.compareTable {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.compareTable thead th {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  padding: 0 0 0.6rem;
+  border-bottom: 1px solid var(--line-mid);
+  vertical-align: bottom;
+}
+
+/* The subject of the note takes the signal colour; its counterpart does not. */
+.compareTable thead th[data-term='disallowed'] {
+  color: var(--orange-bright);
+  border-bottom-color: var(--line-orange);
+}
+
+.compareTable tbody th {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--fg-dim);
+  padding: 0.7rem 1rem 0.7rem 0;
+  width: 34%;
+  vertical-align: top;
+}
+
+.compareTable tbody td {
+  padding: 0.7rem 1rem 0.7rem 0;
+  vertical-align: top;
+}
+
+.compareTable tbody tr + tr th,
+.compareTable tbody tr + tr td {
+  border-top: 1px solid var(--line);
+}
+
+.compareCell {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.compareValue {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Glyph, not colour alone: filled square = specified, hollow = not carried,
+   brackets = unresolved. Mirrors the evidence markers used in the prose. */
+.compareMark {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  translate: 0 -1px;
+}
+
+.compareCell[data-state='present'] .compareMark,
+.compareLegendItem[data-state='present'] .compareMark {
+  background: var(--orange);
+}
+
+.compareCell[data-state='absent'] .compareMark,
+.compareLegendItem[data-state='absent'] .compareMark {
+  border: 1px solid var(--fg-faint);
+}
+
+.compareCell[data-state='open'] .compareMark,
+.compareLegendItem[data-state='open'] .compareMark {
+  border-left: 1px solid var(--ev-unresolved);
+  border-right: 1px solid var(--ev-unresolved);
+}
+
+.compareCell[data-state='absent'] .compareValue,
+.compareCell[data-state='open'] .compareValue {
+  color: var(--fg-muted);
+}
+
+.compareLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 0 0;
+  position: static;
+  border-top: 1px solid var(--line);
+}
+
+/* The figure sits inside the reading column, which draws a rule before every
+   list item. The legend is a key, not prose. */
+.compareLegendItem::before {
+  content: none !important;
+}
+
+.compareLegendItem {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}

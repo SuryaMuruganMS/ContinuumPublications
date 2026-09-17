@@ -927,6 +927,11 @@ export const article: Article = {
 
   related: [
     {
+      label: 'Disallowed vs repudiated claims in IRDAI health data: what each row shows',
+      href: '/articles/disallowed-vs-repudiated-claims-irdai/',
+      note: 'The reference companion to this note — where each term appears, what the returns specify, and which of the two IRDAI defines.',
+    },
+    {
       label: 'How a Continuum note is built',
       href: '/methods/',
       note: 'Extraction, arithmetic checks, and the adversarial pass we run against our own draft.',

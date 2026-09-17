@@ -2,6 +2,7 @@ import type { Article, EvidenceKind, Facet } from '@/types/content';
 import { corrections } from '@/content/corrections';
 import { evidenceOrder } from '@/content/evidence-states';
 import { article as irdaiHealthClaims } from './irdai-health-claims-disallowed-row';
+import { article as disallowedVsRepudiated } from './disallowed-vs-repudiated-claims-irdai';
 
 /**
  * THE REGISTRY.
@@ -15,7 +16,7 @@ import { article as irdaiHealthClaims } from './irdai-health-claims-disallowed-r
  *
  * Order does not matter; the helpers sort by publication date.
  */
-const registry: Article[] = [irdaiHealthClaims];
+const registry: Article[] = [disallowedVsRepudiated, irdaiHealthClaims];
 
 /* ------------------------------------------------------------------ */
 /* Derivation                                                          */
