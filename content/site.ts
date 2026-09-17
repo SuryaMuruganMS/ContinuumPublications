@@ -17,10 +17,16 @@ export const site = {
     'Continuum Publications is an independent research desk. We read primary documents and public data, then report what the evidence supports and what it does not.',
 
   /**
-   * ▸ CHANGE THIS to your real domain before deploying. Overridable at build
-   *   time with NEXT_PUBLIC_SITE_URL. No trailing slash.
+   * ▸ CANONICAL DOMAIN. Read by every canonical URL, the sitemap, robots.txt,
+   *   Open Graph tags and JSON-LD `@id`/`url` fields — there is nowhere else
+   *   this needs to be set. Overridable at build time with
+   *   NEXT_PUBLIC_SITE_URL (no trailing slash) without editing this file;
+   *   when a custom domain replaces the workers.dev one, set the env var (or
+   *   update the fallback below) and redeploy.
    */
-  url: (process.env.NEXT_PUBLIC_SITE_URL || 'https://continuumpublications.org').replace(/\/$/, ''),
+  url: (
+    process.env.NEXT_PUBLIC_SITE_URL || 'https://continuumpublications.suryamuruganms40.workers.dev'
+  ).replace(/\/$/, ''),
 
   locale: 'en_IN',
   language: 'en',

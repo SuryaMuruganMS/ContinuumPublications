@@ -41,6 +41,14 @@ export const article: Article = {
   summary:
     'IRDAI’s health claims table reports claims disallowed as an amount with a count of 0.00 lakh, in both 2023-24 and 2024-25. The table reconciles either way. Two of the three health returns give the field an amount and no count, while the third — the one whose rows match the published table — carries count cells and was blank. IRDAI defines the term nowhere we looked, and coverage has added the disallowed amount to the repudiation figure to produce a ₹26,000 crore composite.',
 
+  /* Search-snippet-only overrides — see the `seo` field's comment in
+     types/content.ts. The H1, deck and summary above are unchanged. */
+  seo: {
+    title: 'IRDAI Health Claims: ₹18,521 Crore Disallowed',
+    description:
+      "IRDAI's health claims table prints ₹18,521.02 crore against a disallowed count of 0.00 lakh. See what the underlying returns establish—and what they don't.",
+  },
+
   published: '2026-09-14',
   readingTime: 11,
 

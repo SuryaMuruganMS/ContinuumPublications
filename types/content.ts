@@ -222,6 +222,17 @@ export interface Article {
   documents: DocumentRef[];
   /** Short summary used for meta description, cards and search. */
   summary: string;
+  /**
+   * Search-engine-only overrides. Never rendered on the page — the H1 stays
+   * `title`, the standfirst stays `deck`, and cards/search stay `summary`.
+   * Use these only when the reader-facing text is accurate but too long for
+   * a search snippet (Bing and Google both truncate and warn past ~60
+   * title characters / ~160 description characters).
+   */
+  seo?: {
+    title?: string;
+    description?: string;
+  };
   /** The 2–4 things the piece establishes. Rendered as the standfirst box. */
   findings: string[];
   /** Questions the piece could not close. Rendered verbatim; do not soften. */

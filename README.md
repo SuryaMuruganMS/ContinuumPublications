@@ -192,7 +192,7 @@ All optional. The site builds and runs with none of them set.
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `NEXT_PUBLIC_SITE_URL` | `https://continuumpublications.org` | Canonical origin for canonical URLs, the sitemap, robots and Open Graph. **Set this before deploying.** No trailing slash. |
+| `NEXT_PUBLIC_SITE_URL` | `https://continuumpublications.suryamuruganms40.workers.dev` | Canonical origin for canonical URLs, the sitemap, robots and Open Graph. Overrides the fallback in `content/site.ts` — set this when deploying to a different domain. No trailing slash. |
 | `NEXT_PUBLIC_NEWSLETTER_ACTION` | empty | A form POST endpoint for the newsletter — Buttondown, Listmonk, MailerLite, Formspree, ConvertKit, anything accepting a plain form POST. When empty, the signup UI degrades to a working email link rather than a button that does nothing. |
 | `NEXT_PUBLIC_NEWSLETTER_FIELD` | `email` | The email field name your provider expects. Buttondown uses `email`; ConvertKit uses `email_address`. |
 

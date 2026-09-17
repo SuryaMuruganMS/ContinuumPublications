@@ -13,7 +13,7 @@ All of these live in **`content/site.ts`**.
 
 | Field | Current placeholder | Action |
 |---|---|---|
-| `site.url` | `https://continuumpublications.org` | Replace with the real domain, or set `NEXT_PUBLIC_SITE_URL` at build time. Canonical URLs, the sitemap, robots and every social card read it. |
+| `site.url` | `https://continuumpublications.suryamuruganms40.workers.dev` | Currently the live domain. Replace with a custom domain later, or set `NEXT_PUBLIC_SITE_URL` at build time. Canonical URLs, the sitemap, robots and every social card read it. |
 | `site.email.general` | `research@continuumpublications.org` | Replace with an address you monitor. |
 | `site.email.corrections` | `corrections@continuumpublications.org` | Replace. This is the address the standards page tells readers to challenge claims at. |
 | `site.email.documents` | `documents@continuumpublications.org` | Replace. |

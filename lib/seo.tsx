@@ -74,15 +74,21 @@ export function articleMeta(article: Article): Metadata {
     .filter(Boolean)
     .join(' · ') || article.title;
 
+  // Search engines see these; the page always renders the full `title` (H1)
+  // and `summary` (standfirst, cards, search). `seo` only shortens what a
+  // results snippet displays — it changes nothing a reader sees on the site.
+  const seoTitle = article.seo?.title ?? article.title;
+  const seoDescription = article.seo?.description ?? article.summary;
+
   return {
-    title: `${article.title} — ${site.name}`,
-    description: article.summary,
+    title: `${seoTitle} — ${site.name}`,
+    description: seoDescription,
     alternates: { canonical: url },
     keywords: [...article.topics, ...article.regulators],
     openGraph: {
       type: 'article',
-      title: article.title,
-      description: article.summary,
+      title: seoTitle,
+      description: seoDescription,
       url,
       siteName: site.name,
       locale: site.locale,
@@ -93,8 +99,8 @@ export function articleMeta(article: Article): Metadata {
     },
     twitter: {
       card: 'summary_large_image',
-      title: article.title,
-      description: article.summary,
+      title: seoTitle,
+      description: seoDescription,
       images: [absoluteUrl(card)],
     },
   };
